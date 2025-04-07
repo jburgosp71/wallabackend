@@ -1,24 +1,28 @@
 import java.util.Scanner;
 
 public class MarsRover {
+    static int sizex, sizey;
+    static int roverx, rovery;
+    static String roverz;
 
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
         System.out.println("Insert horizontal map size:");
-        int sizex = reader.nextInt();
+        setSizeX(reader.nextInt());
         System.out.println("Insert vertical map size:");
-        int sizey = reader.nextInt();
+        setSizeY(reader.nextInt());
 
         System.out.println("Insert horizontal initial rover position:");
-        int roverx = reader.nextInt();
+        setRoverX(reader.nextInt());
         System.out.println("Insert vertical initial rover position:");
-        int rovery = reader.nextInt();
-        System.out.println("Insert initial rover direction:");
-        String roverz = reader.next(); //n = north, e = east, w = west, s = south
+        setRoverY(reader.nextInt());
+        System.out.println("Insert initial rover direction (n = north, e = east, w = west, s = south):");
+        setRoverZ(reader.next());
 
+        String command = "";
         do {
-            System.out.println("Insert command (f = forward, b = backward, l = turn left, r = turn right):");
-            String command = reader.next();
+            System.out.println("Insert command (f = forward, b = backward, l = turn left, r = turn right, x = Finish):");
+            command = reader.next();
             if (command.equals("f")) {
                 if (roverz.equals("n")) {
                     rovery += 1;
@@ -75,7 +79,48 @@ public class MarsRover {
                     roverz = "n";
                 }
             }
-            System.out.println(String.format("Rover is at x:%d y:%d facing:%s", roverx, rovery, roverz));
-        } while (true);
+            System.out.printf("Rover is at x:%d y:%d facing:%s%n", roverx, rovery, roverz);
+        } while (!command.equals("x"));
     }
+
+    public static void setRoverX(int rx) {
+        roverx = rx;
+    }
+
+    public static void setRoverY(int ry) {
+        rovery = ry;
+    }
+
+    public static void setRoverZ(String rz) {
+        roverz = rz;
+    }
+
+    public static void setSizeX(int sx) {
+        sizex = sx;
+    }
+
+    public static void setSizeY(int sy) {
+        sizey = sy;
+    }
+
+    public static int getSizeX() {
+        return sizex;
+    }
+
+    public static int getSizeY() {
+        return sizey;
+    }
+
+    public static int getRoverX() {
+        return roverx;
+    }
+
+    public static int getRoverY() {
+        return rovery;
+    }
+
+    public static String getRoverZ() {
+        return roverz;
+    }
+
 }
