@@ -23,62 +23,9 @@ public class MarsRover {
         do {
             System.out.println("Insert command (f = forward, b = backward, l = turn left, r = turn right, x = Finish):");
             command = reader.next();
-            if (command.equals("f")) {
-                if (roverz.equals("n")) {
-                    rovery += 1;
-                }
-                if (roverz.equals("w")) {
-                    roverx -= 1;
-                }
-                if (roverz.equals("s")) {
-                    rovery -= 1;
-                }
-                if (roverz.equals("e")) {
-                    roverx += 1;
-                }
-            }
-            if (command.equals("b")) {
-                if (roverz.equals("n")) {
-                    rovery -= 1;
-                }
-                if (roverz.equals("w")) {
-                    roverx += 1;
-                }
-                if (roverz.equals("s")) {
-                    rovery += 1;
-                }
-                if (roverz.equals("e")) {
-                    roverx -= 1;
-                }
-            }
-            if (command.equals("l")) {
-                if (roverz.equals("n")) {
-                    roverz = "w";
-                }
-                if (roverz.equals("w")) {
-                    roverz = "s";
-                }
-                if (roverz.equals("s")) {
-                    roverz = "e";
-                }
-                if (roverz.equals("e")) {
-                    roverz = "n";
-                }
-            }
-            if (command.equals("r")) {
-                if (roverz.equals("n")) {
-                    roverz = "e";
-                }
-                if (roverz.equals("e")) {
-                    roverz = "s";
-                }
-                if (roverz.equals("s")) {
-                    roverz = "w";
-                }
-                if (roverz.equals("w")) {
-                    roverz = "n";
-                }
-            }
+
+            executeCommand(command);
+
             System.out.printf("Rover is at x:%d y:%d facing:%s%n", roverx, rovery, roverz);
         } while (!command.equals("x"));
     }
@@ -123,4 +70,62 @@ public class MarsRover {
         return roverz;
     }
 
+    public static void executeCommand(String command) {
+        if (command.equals("f")) {
+            if (roverz.equals("n")) {
+                rovery += 1;
+            }
+            if (roverz.equals("w")) {
+                roverx -= 1;
+            }
+            if (roverz.equals("s")) {
+                rovery -= 1;
+            }
+            if (roverz.equals("e")) {
+                roverx += 1;
+            }
+        }
+        if (command.equals("b")) {
+            if (roverz.equals("n")) {
+                rovery -= 1;
+            }
+            if (roverz.equals("w")) {
+                roverx += 1;
+            }
+            if (roverz.equals("s")) {
+                rovery += 1;
+            }
+            if (roverz.equals("e")) {
+                roverx -= 1;
+            }
+        }
+        if (command.equals("l")) {
+            if (roverz.equals("n")) {
+                roverz = "w";
+            }
+            if (roverz.equals("w")) {
+                roverz = "s";
+            }
+            if (roverz.equals("s")) {
+                roverz = "e";
+            }
+            if (roverz.equals("e")) {
+                roverz = "n";
+            }
+        }
+        if (command.equals("r")) {
+            if (roverz.equals("n")) {
+                roverz = "e";
+            }
+            if (roverz.equals("e")) {
+                roverz = "s";
+            }
+            if (roverz.equals("s")) {
+                roverz = "w";
+            }
+            if (roverz.equals("w")) {
+                roverz = "n";
+            }
+        }
+    }
 }

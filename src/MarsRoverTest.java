@@ -29,6 +29,28 @@ public class MarsRoverTest {
 
     }
 
+    @Test
+    public void testAfterCommandForward() {
+        MarsRover marsRover = initializeMarsRover(10, 10, 5, 5, "n");
+
+        MarsRover.executeCommand("f");
+        assertEquals(5, MarsRover.getRoverX());
+        assertEquals(6, MarsRover.getRoverY());
+        assertEquals("n", MarsRover.getRoverZ());
+
+    }
+
+    @Test
+    public void testAfterCommandBackward() {
+        MarsRover marsRover = initializeMarsRover(10, 10, 5, 5, "n");
+
+        MarsRover.executeCommand("b");
+        assertEquals(5, MarsRover.getRoverX());
+        assertEquals(4, MarsRover.getRoverY());
+        assertEquals("n", MarsRover.getRoverZ());
+
+    }
+
     private MarsRover initializeMarsRover(int sizeX, int sizeY, int posX, int posY, String direction) {
         MarsRover marsRover = new MarsRover();
 
