@@ -29,7 +29,7 @@ public class MarsRover {
 
         initializeRover(sizex, sizey, roverx, rovery, roverz);
 
-        String command = "";
+        String command;
         do {
             System.out.println("Insert command (f = forward, b = backward, l = turn left, r = turn right, x = Finish):");
             command = reader.next();

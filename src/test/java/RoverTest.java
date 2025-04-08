@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RoverTest {
     private Surface surface;
     private Coordinate coordinate;
-    private Direction directionNorth, directionEast, directionSouth, directionWest;
+    private Direction directionNorth;
     private Rover roverNorth, roverSouth, roverEast, roverWest;
 
     private final int expectedMaxX = 10;
@@ -25,10 +25,7 @@ class RoverTest {
         surface = new Surface(expectedMaxX, expectedMaxY);
         coordinate = new Coordinate(expectedX, expectedY);
         directionNorth = new Direction(Direction.NORTH);
-        directionSouth = new Direction(Direction.SOUTH);
-        directionWest = new Direction(Direction.WEST);
-        directionEast = new Direction(Direction.EAST);
-        roverNorth = new Rover(surface, new Coordinate(expectedX, expectedY), new Direction(Direction.NORTH));
+        roverNorth = new Rover(surface, coordinate, directionNorth);
         roverSouth = new Rover(surface, new Coordinate(expectedX, expectedY), new Direction(Direction.SOUTH));
         roverWest = new Rover(surface, new Coordinate(expectedX, expectedY), new Direction(Direction.WEST));
         roverEast = new Rover(surface, new Coordinate(expectedX, expectedY), new Direction(Direction.EAST));
@@ -51,6 +48,7 @@ class RoverTest {
     void getSurface() {
         assertEquals(surface, roverNorth.getSurface());
         assertEquals(expectedMaxX, roverNorth.getSurface().getMaxX());
+        assertEquals(expectedMaxY, roverNorth.getSurface().getMaxY());
         assertEquals(Surface.ORIGIN, roverNorth.getSurface().getMinX());
         assertEquals(Surface.ORIGIN, roverNorth.getSurface().getMinY());
     }
