@@ -20,8 +20,13 @@ public class MarsRover {
         setRoverX(reader.nextInt());
         System.out.println("Insert vertical initial rover position:");
         setRoverY(reader.nextInt());
+
+        Coordinate coordinate = new Coordinate(roverx, rovery);
+
         System.out.println("Insert initial rover direction (n = north, e = east, w = west, s = south):");
         setRoverZ(reader.next());
+
+
 
         String command = "";
         do {

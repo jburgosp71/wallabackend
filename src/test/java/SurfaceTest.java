@@ -14,7 +14,6 @@ class SurfaceTest {
     @BeforeEach
     void setUp() {
         ms = new Surface(expectedMaxX, expectedMaxY);
-        System.out.println("Ejecutando @BeforeEach");
     }
 
     @Test
