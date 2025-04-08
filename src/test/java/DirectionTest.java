@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DirectionTest {
 
     private Direction direction;
-    private String expectedDirection = Direction.NORTH;
+    private final String expectedDirection = Direction.NORTH;
 
     @BeforeEach
     void setUp() {

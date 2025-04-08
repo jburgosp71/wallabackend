@@ -1,8 +1,10 @@
 package main.java;
 
-import lombok.Value;
+import lombok.Getter;
+import lombok.Setter;
 
-@Value
+@Getter
+@Setter
 public class Direction {
     public static final String NORTH = "n";
     public static final String SOUTH = "s";

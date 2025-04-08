@@ -1,9 +1,16 @@
 package main.java;
 
-import lombok.Value;
+import lombok.Getter;
+import lombok.Setter;
 
-@Value
+@Getter
+@Setter
 public class Coordinate {
-    int x;
-    int y;
+    private int x;
+    private int y;
+
+    public Coordinate(int roverx, int rovery) {
+        x = roverx;
+        y = rovery;
+    }
 }
