@@ -6,6 +6,11 @@ import main.java.Rover;
 import main.java.Surface;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,10 +20,10 @@ class RoverTest {
     private Direction directionNorth;
     private Rover roverNorth, roverSouth, roverEast, roverWest;
 
-    private final int expectedMaxX = 10;
-    private final int expectedMaxY = 10;
-    private final int expectedX = 5;
-    private final int expectedY = 5;
+    private static final int expectedMaxX = 10;
+    private static final int expectedMaxY = 10;
+    private static final int expectedX = 5;
+    private static final int expectedY = 5;
 
     @BeforeEach
     void setUp() {
@@ -148,4 +153,35 @@ class RoverTest {
         assertEquals(expectedY, roverEast.getCoordinate().getY());
         assertEquals(Direction.SOUTH, roverEast.getOrientation().getDirection());
     }
+
+    static Stream<Arguments> provideRoverTestData() {
+        Surface providerSurface = new Surface(expectedMaxX,expectedMaxY);
+        return Stream.of(
+            Arguments.of(new Coordinate(expectedX, expectedMaxY), Direction.NORTH, Rover.FORWARD, expectedX, providerSurface.getMinY()),
+            Arguments.of(new Coordinate(expectedMaxX, expectedY), Direction.EAST, Rover.FORWARD, providerSurface.getMinX(), expectedY),
+            Arguments.of(new Coordinate(expectedX, providerSurface.getMinY()), Direction.SOUTH, Rover.FORWARD, expectedX, expectedMaxY),
+            Arguments.of(new Coordinate(providerSurface.getMinX(), expectedY), Direction.WEST, Rover.FORWARD, expectedMaxX, expectedY),
+            Arguments.of(new Coordinate(expectedX, providerSurface.getMinY()), Direction.NORTH, Rover.BACKWARD, expectedX, expectedMaxY),
+            Arguments.of(new Coordinate(providerSurface.getMinX(), expectedY), Direction.EAST, Rover.BACKWARD, expectedMaxX, expectedY),
+            Arguments.of(new Coordinate(expectedX, expectedMaxY), Direction.SOUTH, Rover.BACKWARD, expectedX, providerSurface.getMinY()),
+            Arguments.of(new Coordinate(expectedMaxX, expectedY), Direction.WEST, Rover.BACKWARD, providerSurface.getMinX(), expectedY)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideRoverTestData")
+    void testRoverMoveOverSurfaceLimits(
+            Coordinate initialCoordinate,
+            String initialDirection,
+            String command,
+            int expectedFinalX,
+            int expectedFinalY) {
+        Rover roverOnLimits = new Rover(surface, initialCoordinate, new Direction(initialDirection));
+
+        roverOnLimits.move(command);
+        assertEquals(expectedFinalX, roverOnLimits.getCoordinate().getX());
+        assertEquals(initialDirection, roverOnLimits.getOrientation().getDirection());
+        assertEquals(expectedFinalY, roverOnLimits.getCoordinate().getY());
+    }
+
 }

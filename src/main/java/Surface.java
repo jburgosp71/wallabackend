@@ -18,19 +18,19 @@ public class Surface {
         this.minY = ORIGIN;
     }
 
-    public boolean isMaxLimitX(int posX) {
-        return posX >= this.getMaxX();
+    public boolean isOverMaxLimitX(int posX) {
+        return posX > this.getMaxX();
     }
 
-    public boolean isMinLimitX(int posX) {
-        return posX <= this.getMinX();
+    public boolean isUnderMinLimitX(int posX) {
+        return posX < this.getMinX();
     }
 
-    public boolean isMaxLimitY(int posY) {
-        return posY >= this.getMaxY();
+    public boolean isOverMaxLimitY(int posY) {
+        return posY > this.getMaxY();
     }
 
-    public boolean isMinLimitY(int posY) {
-        return posY <= this.getMinX();
+    public boolean isUnderMinLimitY(int posY) {
+        return posY < this.getMinX();
     }
 }

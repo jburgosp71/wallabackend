@@ -18,22 +18,22 @@ class SurfaceTest {
 
     @Test
     public void testMaxLimitX() {
-        assertTrue(ms.isMaxLimitX(expectedMaxX));
+        assertTrue(ms.isOverMaxLimitX(expectedMaxX));
     }
 
     @Test
     public void testMinLimitX() {
-        assertTrue(ms.isMinLimitX(Surface.ORIGIN));
+        assertTrue(ms.isUnderMinLimitX(Surface.ORIGIN));
     }
 
     @Test
     public void testMaxLimity() {
-        assertTrue(ms.isMaxLimitY(expectedMaxY));
+        assertTrue(ms.isOverMaxLimitY(expectedMaxY));
     }
 
     @Test
     public void testMinLimitY() {
-        assertTrue(ms.isMinLimitY(Surface.ORIGIN));
+        assertTrue(ms.isUnderMinLimitY(Surface.ORIGIN));
     }
 
 }

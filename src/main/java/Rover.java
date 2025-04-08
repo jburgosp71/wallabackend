@@ -83,6 +83,7 @@ public class Rover {
                 coordinate.setX(coordinate.getX() - 1);
                 break;
         }
+        adjustCoordinatesToSurface();
     }
 
     private void moveForward() {
@@ -100,6 +101,21 @@ public class Rover {
                 coordinate.setX(coordinate.getX() + 1);
                 break;
         }
+        adjustCoordinatesToSurface();
     }
 
+    private void adjustCoordinatesToSurface() {
+        if (surface.isUnderMinLimitY(coordinate.getY())) {
+            coordinate.setY(surface.getMaxY());
+        }
+        if (surface.isOverMaxLimitY(coordinate.getY())) {
+            coordinate.setY(surface.getMinY());
+        }
+        if (surface.isUnderMinLimitX(coordinate.getX())) {
+            coordinate.setX(surface.getMaxX());
+        }
+        if (surface.isOverMaxLimitX(coordinate.getX())) {
+            coordinate.setX(surface.getMinX());
+        }
+    }
 }
