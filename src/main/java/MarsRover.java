@@ -1,3 +1,5 @@
+package main.java;
+
 import java.util.Scanner;
 
 public class MarsRover {
@@ -11,6 +13,8 @@ public class MarsRover {
         setSizeX(reader.nextInt());
         System.out.println("Insert vertical map size:");
         setSizeY(reader.nextInt());
+
+        Surface marsSurface = new Surface(sizex, sizey);
 
         System.out.println("Insert horizontal initial rover position:");
         setRoverX(reader.nextInt());
@@ -102,28 +106,22 @@ public class MarsRover {
         if (command.equals("l")) {
             if (roverz.equals("n")) {
                 roverz = "w";
-            }
-            if (roverz.equals("w")) {
+            } else if (roverz.equals("w")) {
                 roverz = "s";
-            }
-            if (roverz.equals("s")) {
+            } else if (roverz.equals("s")) {
                 roverz = "e";
-            }
-            if (roverz.equals("e")) {
+            } else if (roverz.equals("e")) {
                 roverz = "n";
             }
         }
         if (command.equals("r")) {
             if (roverz.equals("n")) {
                 roverz = "e";
-            }
-            if (roverz.equals("e")) {
+            }else if (roverz.equals("e")) {
                 roverz = "s";
-            }
-            if (roverz.equals("s")) {
+            } else if (roverz.equals("s")) {
                 roverz = "w";
-            }
-            if (roverz.equals("w")) {
+            } else if (roverz.equals("w")) {
                 roverz = "n";
             }
         }
