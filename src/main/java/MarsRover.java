@@ -6,6 +6,9 @@ public class MarsRover {
     static int sizex, sizey;
     static int roverx, rovery;
     static String roverz;
+    static Surface surface;
+    static Coordinate coordinate;
+    static Direction direction;
 
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
@@ -14,19 +17,19 @@ public class MarsRover {
         System.out.println("Insert vertical map size:");
         setSizeY(reader.nextInt());
 
-        Surface marsSurface = new Surface(sizex, sizey);
+        surface = new Surface(sizex, sizey);
 
         System.out.println("Insert horizontal initial rover position:");
         setRoverX(reader.nextInt());
         System.out.println("Insert vertical initial rover position:");
         setRoverY(reader.nextInt());
 
-        Coordinate coordinate = new Coordinate(roverx, rovery);
+        coordinate = new Coordinate(roverx, rovery);
 
         System.out.println("Insert initial rover direction (n = north, e = east, w = west, s = south):");
         setRoverZ(reader.next());
 
-
+        direction = new Direction(roverz);
 
         String command = "";
         do {
