@@ -9,129 +9,69 @@ public class MarsRover {
     static Surface surface;
     static Coordinate coordinate;
     static Direction direction;
+    static Rover rover;
 
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
         System.out.println("Insert horizontal map size:");
-        setSizeX(reader.nextInt());
+        sizex = reader.nextInt();
         System.out.println("Insert vertical map size:");
-        setSizeY(reader.nextInt());
+        sizey = reader.nextInt();
 
-        surface = new Surface(sizex, sizey);
 
         System.out.println("Insert horizontal initial rover position:");
-        setRoverX(reader.nextInt());
+        roverx = reader.nextInt();
         System.out.println("Insert vertical initial rover position:");
-        setRoverY(reader.nextInt());
-
-        coordinate = new Coordinate(roverx, rovery);
+        rovery = reader.nextInt();
 
         System.out.println("Insert initial rover direction (n = north, e = east, w = west, s = south):");
-        setRoverZ(reader.next());
+        roverz = reader.next();
 
-        direction = new Direction(roverz);
+        initializeRover(sizex, sizey, roverx, rovery, roverz);
 
         String command = "";
         do {
             System.out.println("Insert command (f = forward, b = backward, l = turn left, r = turn right, x = Finish):");
             command = reader.next();
 
-            executeCommand(command);
+            rover.move(command);
 
-            System.out.printf("Rover is at x:%d y:%d facing:%s%n", roverx, rovery, roverz);
+            System.out.printf("Rover is at x:%d y:%d facing:%s%n",
+                    rover.getCoordinate().getX(),
+                    rover.getCoordinate().getY(),
+                    rover.getOrientation().getDirection()
+            );
         } while (!command.equals("x"));
     }
 
-    public static void setRoverX(int rx) {
-        roverx = rx;
+    public static void initializeRover(int sizeX, int sizeY, int roverX, int roverY, String orientation) {
+        surface = new Surface(sizeX, sizeY);
+        coordinate = new Coordinate(roverX, roverY);
+        direction = new Direction(orientation);
+        rover = new Rover(surface, coordinate, direction);
     }
 
-    public static void setRoverY(int ry) {
-        rovery = ry;
+    public static int getSurfaceMaxX() {
+        return surface.getMaxX();
     }
 
-    public static void setRoverZ(String rz) {
-        roverz = rz;
+    public static int getSurfaceMaxY() {
+        return surface.getMaxY();
     }
 
-    public static void setSizeX(int sx) {
-        sizex = sx;
+    public static int getCoordinateX() {
+        return coordinate.getX();
     }
 
-    public static void setSizeY(int sy) {
-        sizey = sy;
+    public static int getCoordinateY() {
+        return coordinate.getY();
     }
 
-    public static int getSizeX() {
-        return sizex;
-    }
-
-    public static int getSizeY() {
-        return sizey;
-    }
-
-    public static int getRoverX() {
-        return roverx;
-    }
-
-    public static int getRoverY() {
-        return rovery;
-    }
-
-    public static String getRoverZ() {
-        return roverz;
+    public static String getDirection() {
+        return direction.getDirection();
     }
 
     public static void executeCommand(String command) {
-        if (command.equals("f")) {
-            if (roverz.equals("n")) {
-                rovery += 1;
-            }
-            if (roverz.equals("w")) {
-                roverx -= 1;
-            }
-            if (roverz.equals("s")) {
-                rovery -= 1;
-            }
-            if (roverz.equals("e")) {
-                roverx += 1;
-            }
-        }
-        if (command.equals("b")) {
-            if (roverz.equals("n")) {
-                rovery -= 1;
-            }
-            if (roverz.equals("w")) {
-                roverx += 1;
-            }
-            if (roverz.equals("s")) {
-                rovery += 1;
-            }
-            if (roverz.equals("e")) {
-                roverx -= 1;
-            }
-        }
-        if (command.equals("l")) {
-            if (roverz.equals("n")) {
-                roverz = "w";
-            } else if (roverz.equals("w")) {
-                roverz = "s";
-            } else if (roverz.equals("s")) {
-                roverz = "e";
-            } else if (roverz.equals("e")) {
-                roverz = "n";
-            }
-        }
-        if (command.equals("r")) {
-            if (roverz.equals("n")) {
-                roverz = "e";
-            }else if (roverz.equals("e")) {
-                roverz = "s";
-            } else if (roverz.equals("s")) {
-                roverz = "w";
-            } else if (roverz.equals("w")) {
-                roverz = "n";
-            }
-        }
+        rover.move(command);
     }
 }

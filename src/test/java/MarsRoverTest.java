@@ -13,82 +13,78 @@ public class MarsRoverTest {
 
     @BeforeEach
     void setUp() {
-        MarsRover.setSizeX(expectedSizeX);
-        MarsRover.setSizeY(expectedSizeY);
-        MarsRover.setRoverX(expectedPosX);
-        MarsRover.setRoverY(expectedPosY);
-        MarsRover.setRoverZ(expectedDirection);
+        MarsRover.initializeRover(expectedSizeX, expectedSizeY, expectedPosX, expectedPosY, expectedDirection);
     }
 
     @Test
     public void testInitialMapSize() {
-        assertEquals(expectedSizeX, MarsRover.getSizeX());
-        assertEquals(expectedSizeY, MarsRover.getSizeY());
+        assertEquals(expectedSizeX, MarsRover.getSurfaceMaxX());
+        assertEquals(expectedSizeY, MarsRover.getSurfaceMaxY());
     }
 
     @Test
     public void testInitialPosition() {
-        assertEquals(expectedPosX, MarsRover.getRoverX());
-        assertEquals(expectedPosY, MarsRover.getRoverY());
+        assertEquals(expectedPosX, MarsRover.getCoordinateX());
+        assertEquals(expectedPosY, MarsRover.getCoordinateY());
     }
 
     @Test
     public void testInitialDirection() {
-        assertEquals(expectedDirection, MarsRover.getRoverZ());
+        assertEquals(expectedDirection, MarsRover.getDirection());
 
     }
 
     @Test
     public void testAfterCommandForward() {
         MarsRover.executeCommand("f");
-        assertEquals(expectedPosX, MarsRover.getRoverX());
-        assertEquals(6, MarsRover.getRoverY());
-        assertEquals(expectedDirection, MarsRover.getRoverZ());
+        assertEquals(expectedPosX, MarsRover.getCoordinateX());
+        assertEquals(6, MarsRover.getCoordinateY());
+        assertEquals(expectedDirection, MarsRover.getDirection());
 
     }
 
     @Test
     public void testAfterCommandBackward() {
         MarsRover.executeCommand("b");
-        assertEquals(expectedPosX, MarsRover.getRoverX());
-        assertEquals(4, MarsRover.getRoverY());
-        assertEquals(expectedDirection, MarsRover.getRoverZ());
+        assertEquals(expectedPosX, MarsRover.getCoordinateX());
+        assertEquals(4, MarsRover.getCoordinateY());
+        assertEquals(expectedDirection, MarsRover.getDirection());
 
     }
 
     @Test
     public void testAfterCommandTurnLeft() {
         MarsRover.executeCommand("l");
-        assertEquals(expectedPosX, MarsRover.getRoverX());
-        assertEquals(expectedPosY, MarsRover.getRoverY());
-        assertEquals("w", MarsRover.getRoverZ());
+        assertEquals(expectedPosX, MarsRover.getCoordinateX());
+        assertEquals(expectedPosY, MarsRover.getCoordinateY());
+        assertEquals("w", MarsRover.getDirection());
 
         MarsRover.executeCommand("l");
-        assertEquals("s", MarsRover.getRoverZ());
+        assertEquals("s", MarsRover.getDirection());
 
         MarsRover.executeCommand("l");
-        assertEquals("e", MarsRover.getRoverZ());
+        assertEquals("e", MarsRover.getDirection());
 
         MarsRover.executeCommand("l");
-        assertEquals(expectedDirection, MarsRover.getRoverZ());
+        assertEquals(expectedDirection, MarsRover.getDirection());
 
     }
 
     @Test
     public void testAfterCommandTurnRight() {
         MarsRover.executeCommand("r");
-        assertEquals(expectedPosX, MarsRover.getRoverX());
-        assertEquals(expectedPosY, MarsRover.getRoverY());
-        assertEquals("e", MarsRover.getRoverZ());
+        assertEquals(expectedPosX, MarsRover.getCoordinateX());
+        assertEquals(expectedPosY, MarsRover.getCoordinateY());
+        assertEquals("e", MarsRover.getDirection());
 
         MarsRover.executeCommand("r");
-        assertEquals("s", MarsRover.getRoverZ());
+        assertEquals("s", MarsRover.getDirection());
 
         MarsRover.executeCommand("r");
-        assertEquals("w", MarsRover.getRoverZ());
+        assertEquals("w", MarsRover.getDirection());
 
         MarsRover.executeCommand("r");
-        assertEquals(expectedDirection, MarsRover.getRoverZ());
+        assertEquals(expectedDirection, MarsRover.getDirection());
 
     }
 
