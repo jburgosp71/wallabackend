@@ -1,64 +1,66 @@
 package test.java;// test/test.java.MarsRoverTest.java
 import main.java.MarsRover;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MarsRoverTest {
+    private final int expectedSizeX = 10;
+    private final int expectedSizeY = 10;
+    private final int expectedPosX = 5;
+    private final int expectedPosY = 5;
+    private final String expectedDirection = "n";
+
+    @BeforeEach
+    void setUp() {
+        MarsRover.setSizeX(expectedSizeX);
+        MarsRover.setSizeY(expectedSizeY);
+        MarsRover.setRoverX(expectedPosX);
+        MarsRover.setRoverY(expectedPosY);
+        MarsRover.setRoverZ(expectedDirection);
+    }
+
     @Test
     public void testInitialMapSize() {
-        initializeMarsRover(10, 10, 5, 5, "n");
-
-        assertEquals(10, MarsRover.getSizeX());
-        assertEquals(10, MarsRover.getSizeY());
-
+        assertEquals(expectedSizeX, MarsRover.getSizeX());
+        assertEquals(expectedSizeY, MarsRover.getSizeY());
     }
 
     @Test
     public void testInitialPosition() {
-        initializeMarsRover(10, 10, 5, 5, "n");
-
-        assertEquals(5, MarsRover.getRoverX());
-        assertEquals(5, MarsRover.getRoverY());
-
+        assertEquals(expectedPosX, MarsRover.getRoverX());
+        assertEquals(expectedPosY, MarsRover.getRoverY());
     }
 
     @Test
     public void testInitialDirection() {
-        initializeMarsRover(10, 10, 5, 5, "n");
-
-        assertEquals("n", MarsRover.getRoverZ());
+        assertEquals(expectedDirection, MarsRover.getRoverZ());
 
     }
 
     @Test
     public void testAfterCommandForward() {
-        initializeMarsRover(10, 10, 5, 5, "n");
-
         MarsRover.executeCommand("f");
-        assertEquals(5, MarsRover.getRoverX());
+        assertEquals(expectedPosX, MarsRover.getRoverX());
         assertEquals(6, MarsRover.getRoverY());
-        assertEquals("n", MarsRover.getRoverZ());
+        assertEquals(expectedDirection, MarsRover.getRoverZ());
 
     }
 
     @Test
     public void testAfterCommandBackward() {
-        initializeMarsRover(10, 10, 5, 5, "n");
-
         MarsRover.executeCommand("b");
-        assertEquals(5, MarsRover.getRoverX());
+        assertEquals(expectedPosX, MarsRover.getRoverX());
         assertEquals(4, MarsRover.getRoverY());
-        assertEquals("n", MarsRover.getRoverZ());
+        assertEquals(expectedDirection, MarsRover.getRoverZ());
 
     }
 
     @Test
     public void testAfterCommandTurnLeft() {
-        initializeMarsRover(10, 10, 5, 5, "n");
-
         MarsRover.executeCommand("l");
-        assertEquals(5, MarsRover.getRoverX());
-        assertEquals(5, MarsRover.getRoverY());
+        assertEquals(expectedPosX, MarsRover.getRoverX());
+        assertEquals(expectedPosY, MarsRover.getRoverY());
         assertEquals("w", MarsRover.getRoverZ());
 
         MarsRover.executeCommand("l");
@@ -68,17 +70,15 @@ public class MarsRoverTest {
         assertEquals("e", MarsRover.getRoverZ());
 
         MarsRover.executeCommand("l");
-        assertEquals("n", MarsRover.getRoverZ());
+        assertEquals(expectedDirection, MarsRover.getRoverZ());
 
     }
 
     @Test
     public void testAfterCommandTurnRight() {
-        initializeMarsRover(10, 10, 5, 5, "n");
-
         MarsRover.executeCommand("r");
-        assertEquals(5, MarsRover.getRoverX());
-        assertEquals(5, MarsRover.getRoverY());
+        assertEquals(expectedPosX, MarsRover.getRoverX());
+        assertEquals(expectedPosY, MarsRover.getRoverY());
         assertEquals("e", MarsRover.getRoverZ());
 
         MarsRover.executeCommand("r");
@@ -88,16 +88,8 @@ public class MarsRoverTest {
         assertEquals("w", MarsRover.getRoverZ());
 
         MarsRover.executeCommand("r");
-        assertEquals("n", MarsRover.getRoverZ());
+        assertEquals(expectedDirection, MarsRover.getRoverZ());
 
-    }
-
-    private void initializeMarsRover(int sizeX, int sizeY, int posX, int posY, String direction) {
-        MarsRover.setSizeX(sizeX);
-        MarsRover.setSizeY(sizeY);
-        MarsRover.setRoverX(posX);
-        MarsRover.setRoverY(posY);
-        MarsRover.setRoverZ(direction);
     }
 
 }
