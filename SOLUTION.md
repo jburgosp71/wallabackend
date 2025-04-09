@@ -9,3 +9,11 @@
 7. Create Direction for extract direction of the Rover
 8. Create Rover to manage position and direction within the Mars surface
 9. Modify MarsRover to use Rover, Surface, Coordinate and Surface
+10. Once the entities are created, we start applying DDD by placing each element in its corresponding layer and adding what is necessary.
+11. For the Coordinate class, we include the move logic by applying deltas.
+12. Convert Direction class convert to Enum () and included the movement's logic.
+13. Convert Surface class to record because is always constant on application, included limits logic.
+14. Create application layer with a command record and a UseCase tu use it
+15. Create a infrastructure class CLI for introduce commands for console (in the future you can aggregate other inputs for control the rover, stream, file, database access, ...)
+16. Rename the class MarsRover to MarsRoverApplication, which will be responsible for initializing the application.
+17. Refactor class MarsRoverApplication for check correct inputs.
