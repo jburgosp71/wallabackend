@@ -6,7 +6,7 @@ import main.java.domain.model.Rover;
 
 import java.util.Scanner;
 
-public class MarsRoverCLI {
+public class MarsRoverCLI implements MarsRoverController{
     private final MoveRoverUseCase useCase;
     private final Rover rover;
     private final Scanner scanner;
@@ -21,6 +21,7 @@ public class MarsRoverCLI {
         String input;
 
         do {
+            showRoverPositionAndDirection();
             System.out.print("Enter command (f, b, l, r, x): ");
             if (!scanner.hasNextLine()) break;
             input = scanner.nextLine();
@@ -28,7 +29,6 @@ public class MarsRoverCLI {
             if (!input.equalsIgnoreCase("x")) {
                 try {
                     useCase.execute(new MoveCommand(input.charAt(0)));
-                    showRoverPositionAndDirection();
                 } catch (Exception e) {
                     System.out.println("Invalid input: " + input);
                 }
@@ -39,10 +39,19 @@ public class MarsRoverCLI {
     }
 
     private void showRoverPositionAndDirection() {
+        showObstacles();
         System.out.printf("Rover is at x:%d y:%d facing:%s%n",
                 rover.getPosition().getX(),
                 rover.getPosition().getY(),
                 rover.getDirection().getShortCode());
+    }
+
+    private void showObstacles() {
+        if (!rover.getSurface().getObstacles().isEmpty()) {
+            System.out.println("Obstacles on the map:");
+            rover.getSurface().getObstacles().forEach(c ->
+                    System.out.printf(" - Obstacle at x:%d y:%d%n", c.getX(), c.getY()));
+        }
     }
 
 }

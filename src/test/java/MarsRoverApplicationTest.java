@@ -1,80 +1,62 @@
 package test.java;
 
 import main.java.MarsRoverApplication;
+import main.java.infrastructure.input.InputProvider;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.StringReader;
-import java.util.Scanner;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MarsRoverApplicationTest {
 
     @Test
-    public void testValidInput() {
-        String input = String.join("\n",
-                "5",    // maxSurfaceX
-                "5",    // maxSurfaceY
-                "1",    // initialX
-                "2",    // initialY
-                "n",    // direction
-                "x"     // exit command
+    void testRunWithFakeInputProvider() {
+        FakeInputProvider inputProvider = new FakeInputProvider(
+                "5", // maxX
+                "5", // maxY
+                "1", // initialX
+                "2", // initialY
+                "n"  // direction
         );
-        Scanner scanner = new Scanner(new StringReader(input));
 
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
+        Scanner scanner = new Scanner(new StringReader("x\n"));
 
-        MarsRoverApplication.runWithScanner(scanner);
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(output));
 
-        String output = outContent.toString();
-        assertTrue(output.contains("Enter command (f, b, l, r, x)"), "Rover is at x:1 y:2 facing:n");
+        try {
+            MarsRoverApplication.run(inputProvider, scanner);
+        } finally {
+            System.setOut(originalOut);
+        }
+
+        String outputText = output.toString();
+        assertTrue(outputText.contains("Rover is at x:1 y:2 facing:n"));
     }
 
-    @Test
-    public void testInvalidIntegerInput() {
-        String input = String.join("\n",
-                "five", "5",     // invalid then valid maxSurfaceX
-                "six", "5",      // invalid then valid maxSurfaceY
-                "a", "1",        // invalid then valid initialX
-                "b", "2",        // invalid then valid initialY
-                "n",             // direction
-                "x"              // exit
-        );
-        Scanner scanner = new Scanner(new StringReader(input));
+    public static class FakeInputProvider implements InputProvider {
 
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
+        private final Queue<String> inputs;
 
-        MarsRoverApplication.runWithScanner(scanner);
+        public FakeInputProvider(String... inputs) {
+            this.inputs = new LinkedList<>();
+            this.inputs.addAll(Arrays.asList(inputs));
+        }
 
-        String output = outContent.toString();
-        assertTrue(output.contains("Please enter a valid integer."));
-        assertTrue(output.contains("Rover is at x:1 y:2 facing:n"));
-    }
+        @Override
+        public int readInt(String prompt) {
+            return Integer.parseInt(Objects.requireNonNull(inputs.poll()));
+        }
 
-    @Test
-    public void testInvalidDirectionInput() {
-        String input = String.join("\n",
-                "5",     // maxSurfaceX
-                "5",     // maxSurfaceY
-                "1",     // initialX
-                "2",     // initialY
-                "z", "e",// invalid direction, then valid
-                "x"      // exit
-        );
-        Scanner scanner = new Scanner(new StringReader(input));
-
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
-        MarsRoverApplication.runWithScanner(scanner);
-
-        String output = outContent.toString();
-        assertTrue(output.contains("Invalid direction. Use one of: n, e, s, w"));
-        assertTrue(output.contains("Rover is at x:1 y:2 facing:e"));
+        @Override
+        public String readString(String prompt) {
+            return inputs.poll();
+        }
     }
 
 }

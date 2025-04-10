@@ -17,3 +17,4 @@
 15. Create a infrastructure class CLI for introduce commands for console (in the future you can aggregate other inputs for control the rover, stream, file, database access, ...)
 16. Rename the class MarsRover to MarsRoverApplication, which will be responsible for initializing the application.
 17. Refactor class MarsRoverApplication for check correct inputs.
+18. Change MarsRoverApplication adapting for future inputs, Dependency Inversion Principle with InputProvider, MarsRoverController

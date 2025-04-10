@@ -1,9 +1,11 @@
 package main.java.application.usecase;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import main.java.application.command.MoveCommand;
 import main.java.domain.model.Rover;
 
+@Getter
 @RequiredArgsConstructor
 public class MoveRoverUseCase {
     private final Rover rover;
@@ -17,4 +19,5 @@ public class MoveRoverUseCase {
             default -> throw new IllegalArgumentException("Invalid command");
         }
     }
+
 }

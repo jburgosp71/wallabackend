@@ -1,9 +1,6 @@
 package test.java.domain.model;
 
-import main.java.domain.model.Coordinate;
-import main.java.domain.model.Direction;
-import main.java.domain.model.Rover;
-import main.java.domain.model.Surface;
+import main.java.domain.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,12 +14,25 @@ import static org.junit.jupiter.api.Assertions.*;
 class RoverTest {
 
     private Surface surface;
-    private Rover rover;
+    private Rover rover, roverOnSurfaceWithObstacles;
 
     @BeforeEach
     void setUp() {
         surface = new Surface(5, 5);
         rover = new Rover(new Coordinate(2, 2), Direction.NORTH, surface);
+
+        SurfaceBuilder surfaceBuilder = new SurfaceBuilder(5, 5);
+        surfaceBuilder.addObstacle(new Coordinate(0, 0));
+        Surface surfaceWithObstacles = surfaceBuilder.build();
+        roverOnSurfaceWithObstacles = new Rover(new Coordinate(0, 1), Direction.SOUTH, surfaceWithObstacles);
+    }
+
+    @Test
+    void testRoverDontMoveWhenFindObstacle() {
+        Coordinate expectedPosition = new Coordinate(0, 1);
+
+        roverOnSurfaceWithObstacles.moveForward();
+        assertEquals(expectedPosition, roverOnSurfaceWithObstacles.getPosition());
     }
 
     private static Stream<Arguments> forwardAndBackwardProvider() {

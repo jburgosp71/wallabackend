@@ -14,13 +14,9 @@ public class Rover {
         this.surface = surface;
     }
 
-    public void moveForward() {
-        position = surface.wrap(direction.moveForward(position));
-    }
+    public void moveForward() { attemptMove(direction.moveForward(position)); }
 
-    public void moveBackward() {
-        position = surface.wrap(direction.moveBackward(position));
-    }
+    public void moveBackward() { attemptMove(direction.moveBackward(position)); }
 
     public void moveLeft() {
         direction = direction.moveLeft();
@@ -28,5 +24,15 @@ public class Rover {
 
     public void moveRight() {
         direction = direction.moveRight();
+    }
+
+    private void attemptMove(Coordinate target) {
+        Coordinate wrapped = surface.wrap(target);
+        if (surface.hasObstacle(wrapped)) {
+            System.out.printf("Obstacle encountered at x:%d y:%d. Rover stays at current position.%n",
+                    wrapped.getX(), wrapped.getY());
+        } else {
+            position = wrapped;
+        }
     }
 }
