@@ -5,6 +5,7 @@ import main.java.domain.model.*;
 import main.java.infrastructure.input.InputProvider;
 
 import java.util.List;
+import java.util.Optional;
 
 public class MarsRoverBuilder {
     private final InputProvider inputProvider;
@@ -24,9 +25,17 @@ public class MarsRoverBuilder {
 
         int posX = inputProvider.readInt("Insert horizontal initial rover position:");
         int posY = inputProvider.readInt("Insert vertical initial rover position:");
-        String dirStr = inputProvider.readString("Insert initial rover direction (n = north, e = east, w = west, s = south):");
 
-        Direction direction = Direction.fromShortCode(dirStr.toLowerCase());
+        Direction direction = inputProvider.readValidated(
+                "Insert initial rover direction (n = north, e = east, w = west, s = south):",
+                input -> {
+                    try {
+                        return Optional.of(Direction.fromShortCode(input));
+                    } catch (IllegalArgumentException e) {
+                        return Optional.empty();
+                    }
+                }
+        );
 
         Surface surface = new SurfaceBuilder(maxSurfaceX, maxSurfaceY)
                 .addObstacle(obstacles.get(0))

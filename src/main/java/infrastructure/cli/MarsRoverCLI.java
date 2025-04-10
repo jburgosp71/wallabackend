@@ -3,39 +3,46 @@ package main.java.infrastructure.cli;
 import main.java.application.command.MoveCommand;
 import main.java.application.usecase.MoveRoverUseCase;
 import main.java.domain.model.Rover;
+import main.java.infrastructure.input.InputProvider;
 
-import java.util.Scanner;
+import java.util.Optional;
+import java.util.Set;
 
 public class MarsRoverCLI implements MarsRoverController{
     private final MoveRoverUseCase useCase;
     private final Rover rover;
-    private final Scanner scanner;
+    private final InputProvider inputProvider;
 
-    public MarsRoverCLI(MoveRoverUseCase useCase, Rover rover, Scanner scanner) {
+    private static final Set<Character> VALID_COMMANDS = Set.of('f', 'b', 'l', 'r', 'x');
+
+    public MarsRoverCLI(MoveRoverUseCase useCase, Rover rover, InputProvider inputProvider) {
         this.useCase = useCase;
         this.rover = rover;
-        this.scanner = scanner;
+        this.inputProvider = inputProvider;
     }
 
     public void start() {
-        String input;
+        char input;
 
         do {
             showRoverPositionAndDirection();
-            System.out.print("Enter command (f, b, l, r, x): ");
-            if (!scanner.hasNextLine()) break;
-            input = scanner.nextLine();
 
-            if (!input.equalsIgnoreCase("x")) {
-                try {
-                    useCase.execute(new MoveCommand(input.charAt(0)));
-                } catch (Exception e) {
-                    System.out.println("Invalid input: " + input);
-                }
+            input = inputProvider.readValidated("Enter command (f, b, l, r, x):", MarsRoverCLI::validateCommand);
+
+            if (input != 'x') {
+                useCase.execute(new MoveCommand(input));
             }
 
-        } while (!input.equalsIgnoreCase("x"));
+        } while (input != 'x');
+
         showRoverPositionAndDirection();
+    }
+
+    private static Optional<Character> validateCommand(String input) {
+        if (input == null || input.trim().isEmpty()) return Optional.empty();
+
+        char ch = Character.toLowerCase(input.trim().charAt(0));
+        return VALID_COMMANDS.contains(ch) ? Optional.of(ch) : Optional.empty();
     }
 
     private void showRoverPositionAndDirection() {

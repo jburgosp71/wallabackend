@@ -6,17 +6,15 @@ import main.java.domain.model.Direction;
 import main.java.domain.model.Rover;
 import main.java.domain.model.Surface;
 import main.java.infrastructure.cli.MarsRoverCLI;
+import main.java.infrastructure.input.InputProvider;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
+import test.utils.FakeInputProvider;
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 import java.util.stream.Stream;
 
 class MarsRoverCLITest {
@@ -36,7 +34,6 @@ class MarsRoverCLITest {
         String output = simulateCLI(input);
 
         assertTrue(output.contains(expectedOutput));
-        assertTrue(output.contains("Enter command (f, b, l, r, x):"));
     }
 
     @Test
@@ -46,15 +43,15 @@ class MarsRoverCLITest {
         String output = simulateCLI(simulatedInput);
 
         assertTrue(output.contains("Invalid input: z"));
-        assertTrue(output.contains("Enter command (f, b, l, r, x):"));
     }
 
-    private String simulateCLI(String simulatedInput) {
-        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
+    private String simulateCLI(String simulatedInput) {
         Rover rover = new Rover(new Coordinate(0, 0), Direction.NORTH, new Surface(5, 5));
         MoveRoverUseCase useCase = new MoveRoverUseCase(rover);
-        MarsRoverCLI cli = new MarsRoverCLI(useCase, rover, new Scanner(System.in));
+        InputProvider inputProvider = new FakeInputProvider(simulatedInput.split("\n"));
+        MarsRoverCLI cli = new MarsRoverCLI(useCase, rover, inputProvider);
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 

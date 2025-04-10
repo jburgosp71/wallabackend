@@ -5,31 +5,9 @@ import main.java.domain.model.Rover;
 import main.java.infrastructure.builder.MarsRoverBuilder;
 import main.java.infrastructure.input.InputProvider;
 import org.junit.jupiter.api.Test;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Queue;
+import test.utils.FakeInputProvider;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-class FakeInputProvider implements InputProvider {
-    private final Queue<String> inputs;
-
-    FakeInputProvider(String... inputs) {
-        this.inputs = new LinkedList<>(List.of(inputs));
-    }
-
-    @Override
-    public int readInt(String prompt) {
-        return Integer.parseInt(Objects.requireNonNull(inputs.poll()));
-    }
-
-    @Override
-    public String readString(String prompt) {
-        return inputs.poll();
-    }
-}
 
 public class MarsRoverBuilderTest {
 
