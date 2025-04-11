@@ -1,4 +1,4 @@
-package main.java.infrastructure.cli;
+package main.java.application.controller;
 
 public interface MarsRoverController {
     void start();

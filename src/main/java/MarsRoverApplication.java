@@ -5,7 +5,7 @@ import main.java.domain.model.*;
 import main.java.infrastructure.builder.MarsRoverBuilder;
 import main.java.infrastructure.cli.ConsoleInputProvider;
 import main.java.infrastructure.cli.MarsRoverCLI;
-import main.java.infrastructure.cli.MarsRoverController;
+import main.java.application.controller.MarsRoverController;
 import main.java.infrastructure.input.InputProvider;
 
 import java.util.Scanner;

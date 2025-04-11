@@ -1,6 +1,7 @@
 package main.java.infrastructure.cli;
 
 import main.java.application.command.MoveCommand;
+import main.java.application.controller.MarsRoverController;
 import main.java.application.usecase.MoveRoverUseCase;
 import main.java.domain.model.Rover;
 import main.java.infrastructure.input.InputProvider;
@@ -8,7 +9,7 @@ import main.java.infrastructure.input.InputProvider;
 import java.util.Optional;
 import java.util.Set;
 
-public class MarsRoverCLI implements MarsRoverController{
+public class MarsRoverCLI implements MarsRoverController {
     private final MoveRoverUseCase useCase;
     private final Rover rover;
     private final InputProvider inputProvider;
