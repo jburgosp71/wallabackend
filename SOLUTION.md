@@ -19,3 +19,7 @@
 17. Refactor class MarsRoverApplication for check correct inputs.
 18. Change MarsRoverApplication adapting for future inputs, Dependency Inversion Principle with InputProvider, MarsRoverController
 19. Change InputProvider to take external validators
+
+TODO
+- Extract obstacle logic into its own domain module to comply SRP (creating an Obstacle class) with all the logic.
+- Enter the obstacles data dinamically (now is harcoded on MarsRoverBuilder), whith an obstacleProvider interface by example to give us the posibility to enter data from keyboard, file, ...
